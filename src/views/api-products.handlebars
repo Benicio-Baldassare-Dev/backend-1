@@ -1,0 +1,88 @@
+<div class="container">
+    <h1>API de Productos en Tiempo Real</h1>
+    
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Agregar Nuevo Producto</h2>
+                </div>
+                <div class="card-body">
+                    <form id="productForm">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Lista de Productos</h2>
+                </div>
+                <div class="card-body">
+                    <pre id="productsData" class="json-container"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const productsData = document.getElementById('productsData');
+    const productForm = document.getElementById('productForm');
+
+    // Actualizar la lista de productos cuando se recibe el evento
+    socket.on('updateProducts', (products) => {
+        const formattedJson = JSON.stringify({ products }, null, 2);
+        productsData.textContent = formattedJson;
+    });
+
+    // Manejar el envío del formulario
+    productForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const product = {
+            title: document.getElementById('title').value,
+            description: document.getElementById('description').value,
+            price: Number(document.getElementById('price').value)
+        };
+        
+        // Emitir evento para agregar producto
+        socket.emit('addProduct', product);
+        
+        // Limpiar formulario
+        productForm.reset();
+    });
+
+    // Función para eliminar un producto
+    function deleteProduct(productId) {
+        socket.emit('deleteProduct', productId);
+    }
+</script>
+
+<style>
+    .json-container {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+</style>

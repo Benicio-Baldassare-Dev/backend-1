@@ -38,9 +38,9 @@ class ProductManager{
       const fileData = await fs.readFile( this.pathFile, "utf-8" );
       const products = JSON.parse(fileData);
 
-      return { message: "Lista de productos", products };
+      return products;
     } catch (error) {
-      
+      throw new Error("Error al obtener los productos: " + error.message);
     }
   }
 
@@ -53,14 +53,19 @@ class ProductManager{
       const indexProduct = products.findIndex( product => product.id === productId );
       if( indexProduct === -1 ) throw new Error("Producto no encontrado");
 
-      products[indexProduct] = { ...products[indexProduct], ...updates };
+      products[indexProduct] = { 
+        ...products[indexProduct], 
+        ...updates,
+        id: productId // Aseguramos que el ID no cambie
+      };
 
       //guardar los productos actualizados en el json
       await fs.writeFile( this.pathFile, JSON.stringify(products, null, 2) , "utf-8" );
 
-      return  products;
+      return products;
     } catch (error) {
-      
+      console.error("Error al actualizar el producto:", error.message);
+      throw new Error("Error al actualizar el producto: " + error.message);
     }
   }
 

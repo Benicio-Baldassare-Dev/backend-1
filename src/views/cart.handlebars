@@ -1,0 +1,22 @@
+<h1>Carrito de Compras</h1>
+
+<div class="cart-container">
+    {{#if products.length}}
+        {{#each products}}
+            <div class="cart-item">
+                <div>
+                    <p>ID Producto: {{this.productId}}</p>
+                    <p>Cantidad: {{this.quantity}}</p>
+                </div>
+                <button class="remove-from-cart" data-id="{{this.productId}}">Eliminar</button>
+            </div>
+        {{/each}}
+        
+        <div class="cart-actions">
+            <button class="empty-cart">Vaciar Carrito</button>
+            <button class="checkout">Finalizar Compra</button>
+        </div>
+    {{else}}
+        <p>El carrito está vacío</p>
+    {{/if}}
+</div>

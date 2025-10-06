@@ -1,0 +1,26 @@
+[
+  {
+    "id": "8020fbcc-1e7a-484a-a58d-8db8c2be39d8",
+    "title": "Lemon Pie",
+    "description": "Torta de limon con merengue italiano",
+    "price": 8000,
+    "category": "Postre",
+    "stock": 15
+  },
+  {
+    "id": "5b7f297a-4cfe-45fc-a09f-6e09f4de1269",
+    "title": "Brownie",
+    "description": "Torta de limon con merengue italiano",
+    "price": 9000,
+    "category": "Postre",
+    "stock": 20
+  },
+  {
+    "id": "c8e4e4fb-9b1f-49af-bfa9-e025ba08173b",
+    "title": "Cheescake",
+    "description": "Torta de queso, mascarpone",
+    "price": 12000,
+    "category": "Postre",
+    "stock": 20
+  }
+]
