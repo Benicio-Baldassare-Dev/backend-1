@@ -4,6 +4,16 @@ import CartManager from "../models/cartManager.js";
 const router = Router();
 const cartManager = new CartManager("./src/cart.json");
 
+// Mostrar todos los carritos (vista HTML)
+router.get("/", async(req, res) => {
+    try {
+        const carts = await cartManager.getCarts();
+        res.render("cart", { carts });
+    } catch (error) {
+        res.status(500).render("error", { error: error.message });
+    }
+});
+
 // Crear un nuevo carrito
 router.post("/", async(req, res) => {
     try {
